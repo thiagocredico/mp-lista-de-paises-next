@@ -1,3 +1,4 @@
+import CountryCard from '@/components/country-card';
 import { log } from 'console';
 import Image from 'next/image';
 
@@ -36,10 +37,18 @@ async function getCountries(): Promise<Country[]> {
 
 export default async function Home() {
   const countries = await getCountries();
-  console.log(countries);
+  // console.log(countries);
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      HOME
-    </main>
+    <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 w-full container gap-2 mt-16 ">
+      {countries.map((country) => (
+        <CountryCard
+          key={country.name.common}
+          name={country.name.common}
+          ptName={country.translations.por.common}
+          flag={country.flags.svg}
+          flagAlt={country.flags.alt}
+        />
+      ))}
+    </section>
   );
 }
